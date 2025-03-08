@@ -95,15 +95,16 @@ window.onload = function () {
   // Add import/export buttons
   const exportButton = document.createElement("button");
   exportButton.textContent = "Export Quotes";
-  exportButton.addEventListener("click", exportToJsonFile);
+  document.getElementById("exportQuotes").addEventListener("click", exportToJsonFile);
   document.body.appendChild(exportButton);
 
   const importInput = document.createElement("input");
   importInput.type = "file";
   importInput.id = "importFile";
   importInput.accept = ".json";
-  importInput.addEventListener("change", importFromJsonFile);
+  document.getElementById("importFile").addEventListener("change", importFromJsonFile);
   document.body.appendChild(importInput);
 };
+
 
 newQuoteButton.addEventListener("click", showRandomQuote);
