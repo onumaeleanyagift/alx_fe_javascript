@@ -1,4 +1,4 @@
-const quotes = [
+const quotes = JSON.parse(localStorage.getItem("quotes")) || [
   {
     text: "The only way to do great work is to love what you do.",
     category: "Motivation",
