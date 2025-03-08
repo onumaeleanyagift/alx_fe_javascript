@@ -77,6 +77,7 @@ function importFromJsonFile(event) {
     const importedQuotes = JSON.parse(event.target.result);
     quotes.push(...importedQuotes);
     saveQuotes();
+    localStorage.setItem("quotes", JSON.stringify(quotes));
     alert("Quotes imported successfully!");
   };
   fileReader.readAsText(event.target.files[0]);
