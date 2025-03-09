@@ -69,7 +69,7 @@ async function syncQuotesWithServer() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(quotes)
     });
-    console.log("Quotes synced with the server!");
+    console.log("Quotes synced with server!");
   } catch (error) {
     console.error("Error syncing quotes:", error);
   }
