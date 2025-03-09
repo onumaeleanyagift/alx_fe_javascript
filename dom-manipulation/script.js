@@ -69,7 +69,7 @@ async function syncQuotesWithServer() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(quotes)
     });
-    console.log("Quotes synced with the server.");
+    console.log("Quotes synced with the server!");
   } catch (error) {
     console.error("Error syncing quotes:", error);
   }
@@ -107,8 +107,11 @@ function addNewQuote() {
 
   if (newQuoteText && newQuoteCategory) {
     quotes.push({ text: newQuoteText, category: newQuoteCategory });
+    saveQuotes();
+    populateCategories();
     alert("Quote added successfully!");
     showRandomQuote();
+    syncQuotesWithServer();
   } else {
     alert("Please enter both a quote and a category");
   }
@@ -147,6 +150,7 @@ window.onload = function () {
     showRandomQuote();
   }
   createAddQuoteForm();
+  setInterval(fetchQuotesFromServer, 60000);
 
   // Add import/export buttons
   const exportButton = document.createElement("button");
