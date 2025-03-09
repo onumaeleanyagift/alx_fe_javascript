@@ -18,6 +18,8 @@ const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteButton = document.getElementById("newQuote");
 const categoryFilter = document.getElementById("categoryFilter");
 
+const SERVER_URL = "https://jsonplaceholder.typicode.com/posts"; // Mock API for simulation
+
 // Function to display random quote
 function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -42,6 +44,35 @@ function populateCategories() {
 function filterQuotes() {
   localStorage.setItem("selectedCategory", categoryFilter.value);
   showRandomQuote();
+}
+
+// Function to fetch quotes from the server
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch(SERVER_URL);
+    const serverQuotes = await response.json();
+    if (serverQuotes.length) {
+      quotes.push(...serverQuotes.map(q => ({ text: q.title, category: "General" })));
+      saveQuotes();
+      populateCategories();
+    }
+  } catch (error) {
+    console.error("Error fetching quotes from server:", error);
+  }
+}
+
+// Function to sync local quotes with the server
+async function syncQuotesWithServer() {
+  try {
+    await fetch(SERVER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(quotes)
+    });
+    console.log("Quotes synced with the server.");
+  } catch (error) {
+    console.error("Error syncing quotes:", error);
+  }
 }
 
 // Function to create and display a form for adding new quotes
@@ -133,3 +164,4 @@ window.onload = function () {
 
 
 newQuoteButton.addEventListener("click", showRandomQuote);
+categoryFilter.addEventListener("change", filterQuotes);
